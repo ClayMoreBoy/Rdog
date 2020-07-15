@@ -5,7 +5,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  * 
  * @package 权限狗
  * @author 泽泽
- * @version 1.3.0
+ * @version 1.4.0
  * @link https://qqdie.com/archives/typecho-Rdog.html
  */
 class Rdog_Plugin extends Widget_Abstract_Users implements Typecho_Plugin_Interface
@@ -60,9 +60,7 @@ class Rdog_Plugin extends Widget_Abstract_Users implements Typecho_Plugin_Interf
     array('contributor-nb' => _t('勾选该选项让【贡献者】直接发布文章无需审核'),
           'register-nb' => _t('勾选该选项后台注册功能将可以直接设置注册密码'),
 ),
-    array(), _t('拓展设置'), _t('<div style="background: #fff;margin: 15px 0;padding: 10px 5px;"><p style="font-weight: bold;margin-top: 0;">感谢赞助：</p>
-腾讯云渠道代理商
-    </div>'));
+    array(), _t('拓展设置'), _t(''));
     $form->addInput($tuozhan->multiMode());
       
       
@@ -148,7 +146,10 @@ public static function fabu($con,$obj) {
   
  public static function fabuwan($con,$obj) {
            /** 跳转验证后地址 */
-        if (NULL != $obj->request->referer) {
+        if($obj->request->referer=='return'){
+          exit;
+        }
+        elseif (NULL != $obj->request->referer) {
             /** 发送ping */
             $trackback = array_unique(preg_split("/(\r|\n|\r\n)/", trim($obj->request->trackback)));
             $obj->widget('Widget_Service')->sendPing($obj->cid, $trackback);
